@@ -1,0 +1,31 @@
+These appear to be the same issue.  It doesn't recognize having a URL query as valid when it is.
+
+http://www.google.com:80/mail/u/2?twenty=20&UnitID=439  isValid(): false  expected: true
+http://www.google.com:80/mail/u/2?stuff=true  isValid(): false  expected: true
+
+
+Adding a weird port number should work.  This says it's invalid when it's probably valid.
+http://www.google.com:65636/mail/u/2  isValid(): false  expected: true
+
+
+It returns as false when the scheme is missing.  But, it can be missing and be valid.
+www.google.com:80/mail/u/2  isValid(): false  expected: true
+
+
+It doesn't recognize .co.uk as a valid TLD.
+http://www.yahoo.co.uk:80/mail/u/2  isValid(): false  expected: true
+
+
+It doesn't realize that this invalid IP address is invalid.  It returns true when it should be false.
+http://192.174.456.1:80/mail/u/2  isValid(): true  expected: false
+
+
+
+Newer TLDs are missing.  (Yes .ninja is now a valid TLD)
+http://www.google.ninja:80/mail/u/2  isValid(): false  expected: true
+
+
+The scheme htt:// is not valid.
+htt://www.google.com:80/mail/u/2  isValid(): true  expected: false
+
+
